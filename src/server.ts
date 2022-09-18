@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 
 import { PORT } from './utils/constants'
+import users_routes from './handlers/users'
 
 const CORS_OPTIONS = {
   origin: 'http://test.com',
@@ -20,6 +21,9 @@ app.use(morgan('dev'))
 app.get('/', (_req: Request, res: Response) => {
   res.status(200).send('store front app')
 })
+
+// ENDPOINTS
+users_routes(app)
 
 app.get('*', (_req: Request, res: Response) => {
   res.status(404).send('Source not found')
