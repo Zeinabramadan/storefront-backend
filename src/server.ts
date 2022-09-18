@@ -1,15 +1,32 @@
-import express, { Request, Response } from 'express'
+import express, { Application, Request, Response } from 'express'
+import morgan from 'morgan'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 
-const app: express.Application = express()
-const address: string = 'http://localhost:3000'
+import { PORT } from './utils/constants'
 
+const CORS_OPTIONS = {
+  origin: 'http://test.com',
+  optionsSuccessStatus: 200,
+}
+
+const app: Application = express()
+
+// 3rd party libs
+app.use(cors(CORS_OPTIONS))
 app.use(bodyParser.json())
+app.use(morgan('dev'))
 
-app.get('/', function (req: Request, res: Response) {
-  res.send('Hello World!')
+app.get('/', (_req: Request, res: Response) => {
+  res.status(200).send('store front app')
 })
 
-app.listen(3000, function () {
-  console.log(`starting app on: ${address}`)
+app.get('*', (_req: Request, res: Response) => {
+  res.status(404).send('Source not found')
 })
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`)
+})
+
+export default app
