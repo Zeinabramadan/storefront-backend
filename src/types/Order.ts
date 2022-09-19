@@ -1,7 +1,7 @@
 type Order = {
-  id: number
+  id: number | string
   status: string
-  user_id: number
+  user_id: number | string
 }
 
 export default Order
