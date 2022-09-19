@@ -5,6 +5,8 @@ import cors from 'cors'
 
 import { PORT } from './utils/constants'
 import users_routes from './handlers/users'
+import products_routes from './handlers/products'
+import dashboard_routes from './handlers/dashboard'
 
 const CORS_OPTIONS = {
   origin: 'http://test.com',
@@ -24,6 +26,8 @@ app.get('/', (_req: Request, res: Response) => {
 
 // ENDPOINTS
 users_routes(app)
+dashboard_routes(app)
+products_routes(app)
 
 app.get('*', (_req: Request, res: Response) => {
   res.status(404).send('Source not found')

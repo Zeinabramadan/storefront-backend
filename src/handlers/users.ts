@@ -1,6 +1,5 @@
 import { Request, Response, Application } from 'express'
 import { Users } from '../models/user'
-// import User from '../types/User'
 import jwt from 'jsonwebtoken'
 import auth from '../middleware/auth'
 
