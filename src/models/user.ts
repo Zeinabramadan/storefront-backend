@@ -55,7 +55,7 @@ export class Users {
 
   async sign_in(firstName: string, password: string): Promise<User | null> {
     const connection = await client.connect()
-    const sql = 'SELECT password FROM users WHERE firstName=($1)'
+    const sql = 'SELECT * FROM users WHERE firstName=($1)'
     const result = await connection.query(sql, [firstName])
 
     if (result.rows.length) {

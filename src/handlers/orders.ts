@@ -39,8 +39,8 @@ const create = async (req: Request, res: Response) => {
 }
 
 const orders_routes = (app: Application) => {
-  app.get('/orders', index)
-  app.get('/orders/:id', show)
+  app.get('/orders', auth, index)
+  app.get('/orders/:id', auth, show)
   app.post('/orders', auth, create)
 }
 
