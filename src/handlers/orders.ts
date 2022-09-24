@@ -38,10 +38,24 @@ const create = async (req: Request, res: Response) => {
   }
 }
 
+const addProduct = async (req: Request, res: Response) => {
+  const orderID = req.params.id as unknown as number
+  const quantity = req.body.quantity as unknown as number
+  const productID = req.body.product_id as unknown as number
+  try {
+    const order = await orders.addProduct(quantity, orderID, productID)
+    res.status(200).json(order)
+  } catch (error) {
+    console.log(error)
+    res.status(400).json(error)
+  }
+}
+
 const orders_routes = (app: Application) => {
   app.get('/orders', auth, index)
   app.get('/orders/:id', auth, show)
   app.post('/orders', auth, create)
+  app.post('/orders/:id/products', addProduct)
 }
 
 export default orders_routes

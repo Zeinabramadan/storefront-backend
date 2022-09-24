@@ -38,4 +38,19 @@ export class OrdersStore {
       throw new Error(`Could not create an order ${order}. Error: ${error}`)
     }
   }
+
+  async addProduct(quantity: number, orderID: number, productID: number) {
+    try {
+      const connection = await client.connect()
+      const sql =
+        'INSERT INTO orders_products (quantity, order_id, product_id) VALUES ($1, $2, $3) RETURNING *'
+      const result = await connection.query(sql, [quantity, orderID, productID])
+      connection.release()
+      return result.rows[0]
+    } catch (error) {
+      throw new Error(
+        `Could not add product ${productID} to order ${orderID}. Error: ${error}`
+      )
+    }
+  }
 }

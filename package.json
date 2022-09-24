@@ -16,7 +16,7 @@
     "migrate": "db-migrate --env test up && db-migrate up",
     "dmigrate": "db-migrate --env test down",
     "jasmine-test": "yarn run build && yarn run jasmine",
-    "test": "export ENV=test&& db-migrate --env test up && yarn run jasmine-test && db-migrate --env test down"
+    "test": "export ENV=test&& db-migrate --env test down -c 4 && db-migrate --env test up && yarn run jasmine-test"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

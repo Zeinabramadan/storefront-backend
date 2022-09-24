@@ -1,5 +1,4 @@
 import { Users } from '../../models/user'
-import client from '../../database'
 
 const users = new Users()
 
@@ -37,14 +36,14 @@ describe('User Model', () => {
     expect(result).toHaveSize(2)
   })
 
-  afterAll(async () => {
-    try {
-      const connection = await client.connect()
-      const sql = 'DROP TABLE users,orders,products,migrations;'
-      connection.query(sql)
-      connection.release()
-    } catch (error) {
-      throw new Error('Could not drop tables!')
-    }
-  })
+  // afterAll(async () => {
+  //   try {
+  //     const connection = await client.connect()
+  //     const sql = 'DROP TABLE users,orders,products,migrations;'
+  //     connection.query(sql)
+  //     connection.release()
+  //   } catch (error) {
+  //     throw new Error('Could not drop tables!')
+  //   }
+  // })
 })
