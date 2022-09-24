@@ -1,54 +1,86 @@
 # Storefront Backend Project
 
-## Getting Started
+## Table of contents
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+- [Getting Started](#getting-started)
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
+### Getting Started (development Usage)
 
-## Steps to Completion
+- Install the latest LTS versions of Node.js from https://nodejs.org, yarn from https://yarnpkg.com/ and PostgreSQL from https://www.postgresql.org/
 
-### 1. Plan to Meet Requirements
+- Clone the project on your machine, then from the terminal window go to the application directory then run the following command `yarn install` to install the dependencies as defined in the package.json file.
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+- Create a `.env` file with the following variables inside the root folder:
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+```
+POSTGRES_HOST=localhost
+POSTGRES_DB=udacitydev
+POSTGRES_USER=postgres
+POSTGRES_DB_TESTING=udacitytest
+POSTGRES_USER_TESTING=postgres
+PORT=4000
+ENV=dev
+BCRYPT_PASSWORD=password
+PEPPER=@dh.k094
+SALT_ROUNDS=10
+TOKEN_SECRET=alohomora123!
+```
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+- Then run `yarn run dev` from root directory and it will run the server on `http://localhost:4000`.
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+- Database Creation
 
-### 2.  DB Creation and Migrations
+> - `CREATE DATABASE udacitydev`
+> - `CREATE DATABASE udacitytest`
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+- Database PORT `5432`
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+- Here are the scripts needed to run migrations, tests, and linters.
 
-### 3. Models
+```
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix src",
+    "format": "prettier --write 'src/**/*.ts'",
+    "build": "npx tsc",
+    "jasmine": "jasmine",
+    "start:production": "yarn run build && node dist/index.js",
+    "migrate-dev:up": "db-migrate up",
+    "migrate-dev:down": "db-migrate down -c 4",
+    "migrate-test:up": "db-migrate --env test up",
+    "migrate-test:down": "db-migrate --env test down -c 4",
+    "jasmine-test": "yarn run build && yarn run jasmine",
+    "test": "export ENV=test&& yarn run migrate-test:down && yarn run migrate-test:up && yarn run jasmine-test && yarn run migrate-test:down"
+```
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+- > Run `yarn run dev` for development usage
+- > Run `yarn run lint:fix` for fixing formats warnings and errors.
+- > Run `yarn run migrate-dev:up` for DB migrations for development environment.
+- > Run `yarn run test` for testing the whole application.
 
-### 4. Express Handlers
+### Application Architecture
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
+1. **handlers** Folder contain all the APIS, there are four Handlers: Users, Orders, Products and Dashboard, includes tests files
+2. **middleware** Custom middleware such as authentication.
+3. **models** Folder contain all models for the app there are three models: user, order and product
+4. **types** Typescript types to be placed here.
+5. **utils** Contain any helper functions used throughout the application.
 
-### 5. JWTs
+### Endpoints
 
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
+- > [GET] http://localhost:4000/users - **Authenticated**
+- > [POST] http://localhost:4000/users - **Authenticated**
+- > [GET] http://localhost:4000/users/:id - **Authenticated**
 
-### 6. QA and `README.md`
+- > [GET] http://localhost:4000/products
+- > [GET] http://localhost:4000/products:id
+- > [POST] http://localhost:4000/products - **Authenticated**
+- > [GET] http://localhost:4000/products/:category
 
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
+- > [GET] http://localhost:4000/orders - **Authenticated**
+- > [GET] http://localhost:4000/orders/:id - **Authenticated**
+- > [POST] http://localhost:4000/orders - **Authenticated**
+- > [POST] http://localhost:4000/orders/:id/products - **Authenticated**
 
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+- > [GET] http://localhost:4000/users/:id/orders - **Authenticated**
+- > [GET] http://localhost:4000/products_in_orders - **Authenticated**
