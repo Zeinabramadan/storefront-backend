@@ -13,10 +13,10 @@
     "build": "npx tsc",
     "jasmine": "jasmine",
     "start:production": "yarn run build && node dist/index.js",
-    "migrate": "db-migrate --env test up && db-migrate up",
-    "dmigrate": "db-migrate --env test down",
+    "migrate:up": "db-migrate --env test up",
+    "migrate:down": "db-migrate --env test down -c 4",
     "jasmine-test": "yarn run build && yarn run jasmine",
-    "test": "export ENV=test&& db-migrate --env test down -c 4 && db-migrate --env test up && yarn run jasmine-test"
+    "test": "export ENV=test&& yarn run migrate:down && yarn run migrate:up && yarn run jasmine-test && yarn run migrate:down"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
