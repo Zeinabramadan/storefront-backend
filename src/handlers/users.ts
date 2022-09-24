@@ -34,33 +34,17 @@ const create = async (req: Request, res: Response) => {
   try {
     const user = await UsersInstance.create(req.body)
     const token = jwt.sign({ user: user }, process.env.TOKEN_SECRET as string)
-    res.status(200).json({ token: token })
+    res.status(200).json(token)
   } catch (error) {
     console.log(error)
     res.status(400).json({ error: 'This name already exists!' })
   }
 }
 
-// const sign_in = async (req: Request, res: Response) => {
-//   try {
-//     const firstName = req.body.firstName
-//     const password = req.body.password
-//     const newUser = await UsersInstance.sign_in(firstName, password)
-//     const token = jwt.sign(
-//       { user: newUser },
-//       process.env.TOKEN_SECRET as string
-//     )
-//     res.status(200).json({ token: token })
-//   } catch (error) {
-//     res.status(400).json(error)
-//   }
-// }
-
 const users_routes = (app: Application) => {
   app.get('/users', auth, index)
   app.get('/users/:id', auth, show)
   app.post('/users', create)
-  // app.post('/sign-in', sign_in)
 }
 
 export default users_routes
