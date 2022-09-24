@@ -73,9 +73,9 @@ TOKEN_SECRET=alohomora123!
 - > [GET] http://localhost:4000/users/:id - **Authenticated**
 
 - > [GET] http://localhost:4000/products
-- > [GET] http://localhost:4000/products:id
-- > [POST] http://localhost:4000/products - **Authenticated**
+- > [GET] http://localhost:4000/products/:id
 - > [GET] http://localhost:4000/products/:category
+- > [POST] http://localhost:4000/products - **Authenticated**
 
 - > [GET] http://localhost:4000/orders - **Authenticated**
 - > [GET] http://localhost:4000/orders/:id - **Authenticated**
