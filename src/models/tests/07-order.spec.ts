@@ -1,26 +1,13 @@
 import { OrdersStore } from '../order'
-import { Users } from '../user'
-
-const users = new Users()
 
 const store = new OrdersStore()
 
 describe('Order Model', () => {
   const testOrder = {
-    id: 1,
+    id: 2,
     status: 'Active',
     user_id: '1',
   }
-  const testUser = {
-    id: 1,
-    firstName: 'Zeinab',
-    lastName: 'Ramadan',
-    password: '2',
-  }
-  beforeAll(async () => {
-    const result = await users.create(testUser)
-    expect(result).not.toBeNull()
-  })
   it('should have an index method', () => {
     expect(store.index).toBeDefined()
   })
@@ -44,6 +31,6 @@ describe('Order Model', () => {
 
   it('index method should return a list of Orders', async () => {
     const result = await store.index()
-    expect(result).toEqual([testOrder])
+    expect(result.length).toBe(2)
   })
 })

@@ -15,7 +15,6 @@ describe('Users Handler', () => {
   it('Should create user', async () => {
     const response = await request.post('/users').send(testUser)
     token = response.body
-    console.log(token)
     expect(response.status).toBe(200)
   })
 
@@ -27,7 +26,6 @@ describe('Users Handler', () => {
   it('Should get list of users', async () => {
     const response = await request.get('/users').auth(token, { type: 'bearer' })
     expect(response.status).toBe(200)
-    console.log(response.body)
     expect(response.body.length).toBe(1)
   })
 
@@ -39,4 +37,4 @@ describe('Users Handler', () => {
   })
 })
 
-// export token
+export { token }

@@ -44,7 +44,7 @@ const productsInOrders = async (_req: Request, res: Response) => {
 const dashboard_routes = (app: Application) => {
   app.get('/products/:category', byCategory)
   app.get('/users/:id/orders', auth, userOrders)
-  app.get('/products_in_orders', productsInOrders)
+  app.get('/products_in_orders', auth, productsInOrders)
 }
 
 export default dashboard_routes
