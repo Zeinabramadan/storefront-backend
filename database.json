@@ -3,12 +3,12 @@
     "driver": "pg",
     "host": "localhost",
     "database": "udacitydev",
-    "user": "postgres"
+    "user": "ecommerce_admin"
   },
   "test": {
     "driver": "pg",
     "host": "localhost",
     "database": "udacitytest",
-    "user": "postgres"
+    "user": "ecommerce_admin"
   }
 }

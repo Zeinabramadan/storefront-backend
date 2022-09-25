@@ -15,9 +15,11 @@
 ```
 POSTGRES_HOST=localhost
 POSTGRES_DB=udacitydev
-POSTGRES_USER=postgres
+POSTGRES_USER=ecommerce_admin
+POSTGRES_PASSWORD=password22
 POSTGRES_DB_TESTING=udacitytest
-POSTGRES_USER_TESTING=postgres
+POSTGRES_USER_TESTING=ecommerce_admin
+POSTGRES_PASSWORD_TESTING=password22
 PORT=4000
 ENV=dev
 BCRYPT_PASSWORD=password
@@ -32,6 +34,11 @@ TOKEN_SECRET=alohomora123!
 
 > - `CREATE DATABASE udacitydev`
 > - `CREATE DATABASE udacitytest`
+> - `CREATE USER ecommerce_admin WITH PASSWORD 'password22';`
+> - `\c udacitydev`
+> - `GRANT ALL PRIVILEGES ON DATABASE udacitydev TO ecommerce_admin;`
+> - `\c udacitytest`
+> - `GRANT ALL PRIVILEGES ON DATABASE udacitytest TO ecommerce_admin;`
 
 - Database PORT `5432`
 
