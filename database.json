@@ -3,12 +3,14 @@
     "driver": "pg",
     "host": "localhost",
     "database": "udacitydev",
-    "user": "ecommerce_admin"
+    "user": "ecommerce_admin",
+    "password": "password22"
   },
   "test": {
     "driver": "pg",
     "host": "localhost",
     "database": "udacitytest",
-    "user": "ecommerce_admin"
+    "user": "ecommerce_admin",
+    "password": "password22"
   }
 }
