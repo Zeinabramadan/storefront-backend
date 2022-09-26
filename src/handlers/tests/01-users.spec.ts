@@ -14,6 +14,13 @@ describe('Users Handler', () => {
 
   it('Should create user', async () => {
     const response = await request.post('/users').send(testUser)
+    expect(response.status).toBe(200)
+  })
+
+  it('Should sign in user', async () => {
+    const response = await request
+      .post('/users/sign_in')
+      .send({ firstName: 'Zeinab', password: 'pass123' })
     token = response.body
     expect(response.status).toBe(200)
   })
@@ -27,6 +34,7 @@ describe('Users Handler', () => {
     const response = await request.get('/users').auth(token, { type: 'bearer' })
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
+    expect(response.body).toEqual(jasmine.any(Array))
   })
 
   it('Should show a specific user', async () => {
@@ -34,6 +42,8 @@ describe('Users Handler', () => {
       .get(`/users/${testUser.id}`)
       .auth(token, { type: 'bearer' })
     expect(response.status).toBe(200)
+    expect(response.body).toEqual(jasmine.any(Object))
+    expect(response.body.id).toBe(testUser.id)
   })
 })
 

@@ -3,7 +3,7 @@ import app from '../../server'
 
 const request = supertest(app)
 
-import { token } from './01-users.spec'
+let token: string
 
 describe('Orders Handler', () => {
   const testOrder = {
@@ -12,12 +12,21 @@ describe('Orders Handler', () => {
     user_id: 1,
   }
 
+  beforeAll(async () => {
+    const user = await request
+      .post('/users/sign_in')
+      .send({ firstName: 'Zeinab', password: 'pass123' })
+    token = user.body
+  })
+
   it('Should create a new order', async () => {
     const response = await request
       .post('/orders')
-      .auth(token, { type: 'bearer' })
+      .set('Authorization', `Bearer ${token}`)
       .send(testOrder)
     expect(response.status).toBe(200)
+    expect(response.body).toEqual(jasmine.any(Object))
+    expect(response.body.status).toBe(testOrder.status)
   })
   it('Should return 401 unauthorized', async () => {
     const response = await request.post('/orders').send(testOrder)
@@ -26,9 +35,10 @@ describe('Orders Handler', () => {
   it('Should return list of orders', async () => {
     const response = await request
       .get('/orders')
-      .auth(token, { type: 'bearer' })
+      .set('Authorization', `Bearer ${token}`)
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
+    expect(response.body).toEqual(jasmine.any(Array))
   })
 
   it('Should create a new order', async () => {
@@ -36,8 +46,9 @@ describe('Orders Handler', () => {
 
     const response = await request
       .post(`/orders/${1}/products `)
-      .auth(token, { type: 'bearer' })
+      .set('Authorization', `Bearer ${token}`)
       .send(product)
     expect(response.status).toBe(200)
+    expect(response.body).toEqual(jasmine.any(Object))
   })
 })
