@@ -41,6 +41,7 @@ TOKEN_SECRET=alohomora123!
 > - `GRANT ALL PRIVILEGES ON DATABASE udacitytest TO ecommerce_admin;`
 
 - Database PORT `5432`
+- Server PORT `4000`
 
 - Here are the scripts needed to run migrations, tests, and linters.
 
